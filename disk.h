@@ -21,6 +21,7 @@ class disk{
   private:
     int sparedatadisk[DATA_BLOCK_NUM]; // 用位示图表示空余磁盘块
     int spareswapdisk[SWAP_BLOCK_NUM]; // 用位示图表示空余磁盘块
+
     string datapart[DATA_BLOCK_NUM]; // 代表真实的数据区
     string swappart[SWAP_BLOCK_NUM]; // 代表真实的对换区
     int sparedatablock;

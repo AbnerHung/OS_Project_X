@@ -18,10 +18,8 @@ class diskmanager {
     int DeleteFile(string filename); // 删除数据，
     int swap(string data);
     int DelSwap(int swapblocknum);
-
     const disk &getThedisk() const;
-
-private:
+//private:
     disk thedisk; // 代表disk
     map<string, inode> inodes; // string = 文件夹+文件名
 };

@@ -5,48 +5,61 @@
 #ifndef OPROJECT1_LAUNCH_H
 #define OPROJECT1_LAUNCH_H
 #include<iostream>
+#include "dirmanager.h"
 using namespace  std;
 
 class launch {
-public:
-
-    void welcome();
 private:
+    vector<FolderManagement> Users;
+    int level = 0;
+    FolderManagement *currentUser = nullptr;
+    DirMan file;
+    Folder current_folder;
+
+    diskmanager store_disk;
+public:
+    void welcome();
+    void login();
+    void create_User();
+    void create_file();
+    void create_folder();
+    void ls();
+    void rmfolder();
+    void rmfile();
 
 };
 void launch::welcome() {
-//    fat.init(blocks);
-//    root = new Folder(rootPath, FileType::FOLDER);
-//    root->path = rootPath;
-//    this->DiskMkdir(rootPath);
-//    //设置磁盘根为目录
-//    //设置根节点的父节点为自身
-//    root->father = root;
 
-
-//创建一个FLoder对象  创建一个dir文件目录对象
-     cout << "欢迎！！-----------您可输入help获得帮助------------" << endl << "\n[onzan_zyu@localhost " + rootPath + "]# ";
-    string opear, cmd;
+    login();
+    cout<<"root@localhost:/linux/$";
+    string cmd;
     while (cin >> cmd) {
-        if (cmd == "format") {
-            this->format(blocks);
-        } else if (cmd == "mkdir") {
-            this->Mkdir();
-        } else if (cmd == "rmdir") {
-            this->Rmdir();
-        } else if (cmd == "ls") {
+        if(cmd=="create_User"){
+            this->create_User();
+            cout<<"successful create user"<<endl;
+        }else if(cmd == "mkdir"){  //create folder
+            this->create_folder();
+        }//create file
+        else if (cmd == "create_file") {
+            this->create_file();
+        }else if (cmd == "ls") {
             this->ls();
-        } else if (cmd == "cd") {
-            this->cd();
-        } else if (cmd == "create") {
-            this->create();
-        } else if (cmd == "open") {
-            this->open();
-        } else if (cmd == "close") {
-            this->close();
-        } else if (cmd == "rm") {
-            this->rm();
-        } else if (cmd == "exit") {
+        }//rmove folde
+        else if (cmd == "rmdir") {
+            this->rmfolder();
+        }else if (cmd == "rm_file") {
+            this->rmfile();
+        }
+        else if (cmd == "cd") {
+//            this->cd(); // level =1;
+        } else if (cmd == "open") {  //内容打印出来c
+            string filename = "";
+            cin>>filename;
+           // this->currentUser->showFolderManagement(filename);
+        }
+        //else if (cmd == "close") {
+//            this->close();}
+         else if (cmd == "exit") {
             printf("%s\n", "再见！");
             break;
         } else if (cmd == "help") {
@@ -66,8 +79,69 @@ void launch::welcome() {
         } else {
             cout << "No command '"<<cmd<<"' found, please try again" << endl;
         }
-        cout << "\nroot@localhost:" + this->root->path + "$ ";
+        if(level) {
+            cout<<currentUser->uId<<"@localhost:/linux/:$ ";
+        } else {
+            cout<<"root@localhost:/linux/:$ ";
+        }
+
     }
 }
+
+void launch::create_User() {
+    string name  =" ";
+    cin>>name;
+    FolderManagement *temp = new FolderManagement(name);
+    this->Users.push_back(*temp);
+}
+void launch::create_file() {
+    string filename = "";
+    cin>>filename;
+    //创建目录
+    this->file.CreatDir(this->current_folder.folderName,filename,0);
+    //文件写入磁盘
+    cout<<"please input your data"<<endl;
+    string data;
+    cin>>data;
+    this->store_disk.CreateFile(filename,data);
+}
+void launch::create_folder(){
+    string folder_name;
+    cin>>folder_name;
+    this->currentUser->createFolder(this->currentUser->uId,folder_name);
+}
+void launch::ls(){
+    if(!this->level){
+        for(int i=0;i<this->Users.size();i++)
+                cout<<this->Users[i].uId<<" ";
+            cout<<endl;
+    }
+    else{ //输出DirManager的索引中文件？？？？？？？？？？？？？？？？？？？？？？？？？
+        for(auto i= this->file.DirMap.begin();i!=this->file.DirMap.end();i++){
+            cout<<i->first; //输出当前目录的文件
+        }
+    }
+}
+void launch::rmfolder() {
+    string folder_name;
+    cin>>folder_name;
+    //直接删除
+    currentUser->DirFileMAP.erase(folder_name);
+}
+void launch::rmfile() {
+    string filename;
+    cin>>filename;
+    this->file.DirMap.erase(filename);
+    //清除数据？？？？？？？？？？？？？？？？？？？？？？？
+
+}
+void launch::login() {
+    cout<<"----------------------------------------------------\n";
+    cout<<"----------------Operating System DEMO---------------\n";
+    cout<<"----------------------------------------------------\n";
+    cout<<"----------------------login-------------------------\n";
+
+}
+
 
 #endif //OPROJECT1_LAUNCH_H
