@@ -9,6 +9,13 @@ using namespace std;
 
 int main(){
 
+    DirFiles.CreatDirFile("amd","file1");
+    DirFiles.CreatDirFile("amd","file2");
+    DirFiles.ShowDirFileMan("amd");
+    Dirs.CreatDir("file1", "test1", "1");
+    Dirs.CreatDir("file1", "test2", "1");
+    Dirs.CreatDir("file1", "test3", "1");
+    Dirs.ShowDirMan("file1");
     /*
   // 目录管理和磁盘管理测试
   Dirs.CreatDir("admin", "test1", "1");
