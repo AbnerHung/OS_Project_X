@@ -4,18 +4,20 @@
 #include "diskmanager.h"
 #include "dirmanager.h"
 #include "memmanager.h"
+#include "Usrs.h"
 
 using namespace std;
 
 int main(){
-
-    DirFiles.CreatDirFile("amd","file1");
-    DirFiles.CreatDirFile("amd","file2");
-    DirFiles.ShowDirFileMan("amd");
+/*
+    Folders.createFolder("amd", "file1");
+    Folders.createFolder("amd", "file2");
+    Folders.showFolderManagement("amd");
     Dirs.CreatDir("file1", "test1", "1");
     Dirs.CreatDir("file1", "test2", "1");
     Dirs.CreatDir("file1", "test3", "1");
     Dirs.ShowDirMan("file1");
+    */
     /*
   // 目录管理和磁盘管理测试
   Dirs.CreatDir("admin", "test1", "1");
@@ -36,7 +38,7 @@ int main(){
   cout<<"位示图:\n";
   A_Disk.getThedisk().showSpareDataDisk();
 
-  Dirs.DelFile("test1");
+  Dirs.delFolder("test1");
   cout << "After Delete " << A_Disk.ReadFile("test1") << endl;
   assert(""==A_Disk.ReadFile("test1"));
 
@@ -54,5 +56,17 @@ int main(){
   cout << "--------------" << endl;
   Mems.Alloc(5, "test1");
   Mems.show();*/
-  return 0;
+    Usrs *users;
+   // users->init();
+    //users->restore();
+    users->addUser();
+    users->saveData(LoginUsers);
+    Usrs *users2;
+    //users2->restore();
+    for(auto i : LoginUsers) {
+        cout<< i.userName <<" ";
+    };
+    cout<<"\n";
+
+    return 0;
 }

@@ -60,6 +60,7 @@ public:
     void DelFile(string x);//删除文件
     void CreatDir(string owner,string filename,string structer);//为文件创建目录项
     void ShowDirMan(string x);//遍历显示当前的所有目录项
+    void ShowDirMan();
 };
 string DirMan::TimeGen()
 {
@@ -143,6 +144,7 @@ void DirMan::CreatDir(string owner,string filename,string structer){
     DirMap.insert(map<string, Dir>::value_type(dir.FileName, dir));
     cout<<dir.FileName<<"已创建成功"<<endl;
 }
+
 void DirMan::ShowDirMan(string x){
     map<string,Dir>::iterator it;
     for(it=DirMap.begin();it!=DirMap.end();it++){
@@ -153,54 +155,71 @@ void DirMan::ShowDirMan(string x){
         }
     }
 }
-//定义文件夹
-class DirFile {
-public:
-    DirFile()
-    {
-        DirFileName = "NULL";
-        DirFileOwner = "NULL";
-        filedate = "NULL";
+
+void DirMan::ShowDirMan(){
+    map<string,Dir>::iterator it;
+    for(it=DirMap.begin();it!=DirMap.end();it++){
+        pair<string,Dir> item=*it;
+        cout<<item.second.FileName << "\t-" <<item.second.Date << endl;
     }
-    string DirFileName;
-    string DirFileOwner;
-    string filedate;
-    void setDirFileName(string a1);
-    void setDirFileOwner(string b1);
-    void setfiledate(string c1);
-};
-
-void DirFile::setDirFileName(string a1) {
-    DirFileName = a1;
 }
-
-void DirFile::setDirFileOwner(string b1) {
-    DirFileOwner = b1;
-}
-
-void DirFile::setfiledate(string c1) {
-    filedate = c1;
-}
-
-class DirFileMan{
+//定义文件夹
+class Folder {
 public:
-    map<string,DirFile> DirFileMAP;
-    void creatNullDirFile(string x);
-    void DelNullDirFile();
-    string FileTimeGen();
-    bool checkFile(string x);
-    void DelFile(string x);//删除文件夹
-    void CreatDirFile(string owner,string filename,string structer);//为文件夹创建目录项
-    void ShowDirFileMan(string x);//遍历显示当前文件夹的所有目录项
-    void CreatDirFile(string owner, string filename);
+    Folder()
+    {
+        folderName = "NULL";
+        folderOwner = "NULL";
+        folderDate = "NULL";
+    }
+    string folderName;
+    string folderOwner;
+    string folderDate;
+    void setFolderName(string a1);
+    void setFolderOwner(string b1);
+    void setFolderDate(string c1);
 };
 
-string DirFileMan::FileTimeGen()
+void Folder::setFolderName(string a1) {
+    folderName = a1;
+}
+
+void Folder::setFolderOwner(string b1) {
+    folderOwner = b1;
+}
+
+void Folder::setFolderDate(string c1) {
+    folderDate = c1;
+}
+
+class FolderManagement{
+public:
+    FolderManagement();
+    map<string,Folder> DirFileMAP;
+
+
+    FolderManagement(const string &uId);
+    void creatNullFolder(string x);
+    void delNullFolder();
+    string fileTimeGen();
+    string folder_dir;
+    string uId ;
+
+    void setUId(const string &uId);
+    const string &getUId() const;
+    bool checkFolder(string x);
+    void delFolder(string x);//删除文件夹
+    void createuserFolder(string s);
+    void createFolder(string owner, string filename, string structer);//为文件夹创建目录项
+    void showFolderManagement(string x);//遍历显示当前文件夹的所有目录项
+    void createFolder(string owner, string filename);
+};
+
+string FolderManagement::fileTimeGen()
 {
     time_t timer;
     time(&timer);
     tm *t_tm = localtime(&timer);
-
     int year = t_tm->tm_year + 1900;//年
     int month = t_tm->tm_mon + 1;//月
     int day = t_tm->tm_mday;//日
@@ -229,38 +248,55 @@ string DirFileMan::FileTimeGen()
     string s7=s1+" "+s2+"/"+s3+" "+s4+":"+s5+":"+s6;
     return s7;
 }
-bool DirFileMan::checkFile(string x) {
-    map<string,DirFile>::iterator iter=DirFileMAP.find(x);
+bool FolderManagement::checkFolder(string x) {
+    map<string,Folder>::iterator iter=DirFileMAP.find(x);
     if(iter!=DirFileMAP.end()){
         return 1;
     }
     else return 0;
 }
-void DirFileMan::DelFile(string x){
+void FolderManagement::delFolder(string x){
     DirFileMAP.erase(x); //删除目录
 }
-void DirFileMan::CreatDirFile(string owner, string filename) {
-    DirFile dirfile;
+void FolderManagement::createFolder(string owner, string filename) {
+    Folder dirfile;
     //时间 kk4
-    dirfile.DirFile::setfiledate(FileTimeGen());
+    dirfile.Folder::setFolderDate(fileTimeGen());
     //拥有者
-    dirfile.DirFile::setDirFileOwner(owner);
+    dirfile.Folder::setFolderOwner(owner);
     //文件名
-    dirfile.DirFile::setDirFileName(filename);
+    dirfile.Folder::setFolderName(filename);
     //加入目录
-    DirFileMAP.insert(map<string, DirFile>::value_type(dirfile.DirFileName, dirfile));
-    cout<<dirfile.DirFileName<<"已创建成功"<<endl;
+    DirFileMAP.insert(map<string, Folder>::value_type(dirfile.folderName, dirfile));
+    cout << dirfile.folderName << "已创建成功" << endl;
 }
-void DirFileMan::ShowDirFileMan(string x) {
-    map<string,DirFile>::iterator it;
+void FolderManagement::showFolderManagement(string x) {
+    map<string,Folder>::iterator it;
     for(it=DirFileMAP.begin();it!=DirFileMAP.end();it++){
-        pair<string,DirFile> item=*it;
-        if(item.second.DirFileOwner == x)
+        pair<string,Folder> item=*it;
+        if(item.second.folderOwner == x)
         {
-            cout<<item.second.DirFileName << "\t" <<item.second.filedate << endl;
+            cout << item.second.folderName << "\t" << item.second.folderDate << endl;
         }
     }
 }
+
+const string &FolderManagement::getUId() const {
+    return uId;
+}
+
+void FolderManagement::setUId(const string &uId) {
+    FolderManagement::uId = uId;
+}
+
+FolderManagement::FolderManagement(const string &uId) : uId(uId) {
+
+}
+
+FolderManagement::FolderManagement() {
+
+}
+
 DirMan Dirs;
-DirFileMan DirFiles;
+FolderManagement Folders;
 #endif //OPROJECT1_THREADMANAGER_H
