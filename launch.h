@@ -11,7 +11,6 @@ using namespace  std;
 
 class launch {
 private:
-
     vector<FolderManagement> Users;
     int level = 0;
     FolderManagement *currentUser = nullptr;
@@ -35,13 +34,13 @@ public:
 void launch::welcome() {
     login();
     if(this->level) {
-        cout<<currentUser->uId<<"@localhost:/root/"<<currentUser->uId;
+        cout<<currentUser->uId<<"@localhost:/"<<currentUser->uId;
         if(this->level == 2) {
             cout<<"/"<<current_folder.folderName;
         }
         cout<<"/:$ ";
     } else {
-        cout<<"root@localhost:/root/$";
+        cout<<"root@localhost:/$";
     }
 
     fflush(stdout);
@@ -96,13 +95,13 @@ void launch::welcome() {
             cout << "No command '"<<cmd<<"' found, please try again" << endl;
         }
         if(this->level) {
-            cout<<currentUser->uId<<"@localhost:/root/"<<currentUser->uId;
+            cout<<currentUser->uId<<"@localhost:/"<<currentUser->uId;
             if(this->level == 2) {
                 cout<<"/"<<current_folder.folderName;
             }
             cout<<"/:$ ";
         } else {
-            cout<<"root@localhost:/root/$";
+            cout<<"root@localhost:/$";
         }
 
     }
@@ -202,6 +201,8 @@ void launch::login() {
     cout<<"----------------------login-------------------------\n";
     fflush(stdout);
     users.Login();
+    this->currentUser = new FolderManagement(users.usrs_name);
+    Users.push_back(*currentUser);
 }
 
 void launch::reg() {
@@ -211,6 +212,5 @@ void launch::reg() {
     this->currentUser = new FolderManagement(users.usrs_name);
     Users.push_back(*currentUser);
 }
-
 
 #endif //OPROJECT1_LAUNCH_H
