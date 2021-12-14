@@ -200,9 +200,15 @@ void launch::login() {
     fflush(stdout);
     cout<<"----------------------login-------------------------\n";
     fflush(stdout);
-    users.Login();
-    this->currentUser = new FolderManagement(users.usrs_name);
-    Users.push_back(*currentUser);
+    if(users.Login() == 666) {
+        this->level = 0;
+        Users = users.init();
+    } else {
+        this->level = 1;
+        this->currentUser = new FolderManagement(users.usrs_name);
+        Users = users.init();
+    }
+
 }
 
 void launch::reg() {

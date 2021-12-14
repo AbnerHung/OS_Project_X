@@ -23,11 +23,32 @@ class Usrs{
 public:
     void Reg();
     int Login();
+    vector<FolderManagement> init();
     std::string usrs_name;
 
 private:
     std::string usrs_pwd;
 };
+
+vector<FolderManagement> Usrs::init()
+{
+    vector<FolderManagement> tmp;
+    ifstream Read("./account.txt",ios::in);
+    string temp;
+    int judge=0;
+    while(getline(Read,temp))
+    {
+        judge++;
+        if (judge%2==0)
+        {
+            continue;
+        }
+        if(temp != "root") {
+            tmp.push_back(* new FolderManagement(temp));
+        }
+    }
+    return tmp;
+}
 
 void Usrs::Reg()
 {
@@ -179,17 +200,13 @@ flag0:
         temp.erase(temp.begin(),temp.end());
     }
     Read.close();
-    Sleep(2000);
+    Sleep(1000);
     cout<<'\r';
     fflush(stdout);
     cout<<"Bad user name or password,please try again!\n";
     fflush(stdout);
     name.erase(name.begin(),name.end());
     password.erase(password.begin(),password.end());
-    cout<<"Press any key to continue.\n";
-    fflush(stdout);
-    getchar();
-    system("cls");
     fflush(stdout);
     goto flag0;
 
@@ -206,6 +223,9 @@ flag0:
     Usrs::usrs_name=name;
     cout<<"\n";
     fflush(stdout);
+    if(name=="root") {
+        return 666;
+    }
     return 1;
 
 }
