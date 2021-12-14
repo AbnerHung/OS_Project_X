@@ -70,7 +70,8 @@ void launch::welcome() {
         } else if (cmd == "open") {  //内容打印出来c
             string filename = "";
             cin>>filename;
-           // this->currentUser->showFolderManagement(filename);
+            //int num = this->store_disk.inodes[filename];
+           //this->store_disk.thedisk.datapart[num];
         }
         //else if (cmd == "close") {
 //            this->close();}

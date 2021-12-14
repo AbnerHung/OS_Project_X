@@ -18,7 +18,7 @@ class disk{
     int delete_swap(int blockindex);
     void showSpareDataDisk() const;
     void initiate();
-  private:
+
     int sparedatadisk[DATA_BLOCK_NUM]; // 用位示图表示空余磁盘块
     int spareswapdisk[SWAP_BLOCK_NUM]; // 用位示图表示空余磁盘块
 
