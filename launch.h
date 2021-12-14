@@ -158,12 +158,12 @@ void launch::create_file() {
     this->store_disk.createFile(filename,data);
 }
 void launch::create_folder(){
-    if(this->level == 0) {
-        cout<<"permission denied!!!";
-        return;
-    }
     string folder_name;
     cin>>folder_name;
+    if(this->level == 0) {
+        cout<<"permission denied!\n";
+        return;
+    }
     this->currentUser->createFolder(this->currentUser->uId,folder_name);
 }
 void launch::ls(){
