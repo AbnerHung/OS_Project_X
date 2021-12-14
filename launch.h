@@ -7,6 +7,8 @@
 #include<iostream>
 #include "dirmanager.h"
 #include "Usrs.h"
+#include "threadmanager.h"
+
 using namespace  std;
 
 class launch {
@@ -29,7 +31,9 @@ public:
     void rmfolder();
     void rmfile();
     void cd();
+    void showBitMap();
 
+    int threadDemo();
 };
 void launch::welcome() {
     login();
@@ -49,28 +53,28 @@ void launch::welcome() {
         if(cmd=="create_User"){
             this->create_User();
             cout<<"successful create user"<<endl;
-        }else if(cmd == "mkdir"){  //create folder
+        } else if(cmd == "mkdir"){  //create folder
             this->create_folder();
-        }//create file
-        else if (cmd == "create_file") {
+        } else if (cmd == "create_file") {
             this->create_file();
-        }else if (cmd == "ls") {
+        } else if (cmd == "ls") {
             this->ls();
-        }//rmove folde
-        else if (cmd == "rmdir") {
+        } else if (cmd == "rmdir") {
             this->rmfolder();
-        }else if (cmd == "rm_file") {
+        } else if (cmd == "rm_file") {
             this->rmfile();
-        }else if (cmd == "useradd") {
+        } else if (cmd == "showBitMap" || cmd == "show_bitmap"|| cmd == "shbitmap"|| cmd == "shbtm") {
+            this->showBitMap();
+        } else if (cmd == "useradd") {
             this->reg();
-        }
-        else if (cmd == "cd") {
+        } else if (cmd == "thread_demo" || cmd == "t_demo") {
+            this->threadDemo();
+        } else if (cmd == "cd") {
             this->cd(); // level =1;
         } else if (cmd == "open") {  //内容打印出来c
             string filename = "";
             cin>>filename;
-            //int num = this->store_disk.inodes[filename];
-           //this->store_disk.thedisk.datapart[num];
+            cout<<this->store_disk.readFile(filename)<<endl;
         }
         //else if (cmd == "close") {
 //            this->close();}
@@ -138,7 +142,7 @@ void launch::cd(){
         }
     }
     cout<<"cd: "<<next<<": No such file or directory\n";
-    this->level = 0;
+
 }
 void launch::create_User() {
     string name  =" ";
@@ -150,9 +154,10 @@ void launch::create_file() {
     string filename = "";
     cin>>filename;
     //创建目录
-    this->file.CreatDir(this->current_folder.folderName,filename,0);
+    this->file.CreatDir(this->current_folder.folderName,filename);
     //文件写入磁盘
     cout<<"please input your data"<<endl;
+    fflush(stdout);
     string data;
     cin>>data;
     this->store_disk.createFile(filename,data);
@@ -179,7 +184,7 @@ void launch::ls(){
             cout<<i->first; //输出当前目录的文件
         }*/
     } else if(this->level == 2) {
-        this->file.ShowDirMan(currentUser->uId);
+        this->file.ShowDirMan(this->current_folder.folderName);
     }
 }
 void launch::rmfolder() {
@@ -194,6 +199,9 @@ void launch::rmfile() {
     this->file.DirMap.erase(filename);
     //清除数据？？？？？？？？？？？？？？？？？？？？？？？
 
+}
+void launch::showBitMap() {
+    this->store_disk.getThedisk().showSpareDataDisk();
 }
 void launch::login() {
     cout<<"----------------------------------------------------\n";
@@ -221,6 +229,47 @@ void launch::reg() {
     users.Reg();
     this->currentUser = new FolderManagement(users.usrs_name);
     Users.push_back(*currentUser);
+}
+
+int launch::threadDemo() {
+    string op1;
+    int op;
+    int id=0;
+    string Fname;
+    ThreadMan TA;
+    //mutex mt;
+    do{
+        cout<<"1. Data generation thread 2. Delete data thread 3. Execution thread 0. Exit"<<endl;
+        cout<<"Please enter the thread to be executed"<<endl;
+        cin>>op1;
+        if(op1=="1"){
+            int n;
+            cout<<"Please enter the data size (calculated in bytes), file name, separated by spaces, and press Enter to end"<<endl;
+            cin>>n;
+            cin>>Fname;
+            thread gen(&ThreadMan::Generate,&TA,n,Fname,++id);
+            gen.join();
+        }
+        else if(op1=="2"){
+            cout<<"Contents of the current directory"<<endl;
+            Dirs.ShowDirMan();
+            cout<<"Please enter the name of the deleted file, press Enter to end"<<endl;
+            cin>>Fname;
+            thread del(&ThreadMan::Delete,&TA,Fname,++id);
+            del.join();
+        }
+        else if(op1=="3"){
+            cout<<"Contents of the current directory"<<endl;
+            Dirs.ShowDirMan();
+            cout<<"Please enter the file name to be executed"<<endl;
+            cin>>Fname;
+            thread exe(&ThreadMan::Execute,&TA,Fname,++id);
+            exe.join();
+        }
+        else
+            continue;
+    }while(op1!="0");
+    return 0;
 }
 
 #endif //OPROJECT1_LAUNCH_H

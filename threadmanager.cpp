@@ -67,7 +67,7 @@ void ThreadMan::Execute(string file_name,int Thread_id)    //执行功能
     return ;
 }/**/
 
-int main()
+int demo()
 {
     int op;
     int id=0;

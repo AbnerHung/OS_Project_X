@@ -59,6 +59,7 @@ public:
     bool check(string x);
     void DelFile(string x);//删除文件
     void CreatDir(string owner,string filename,string structer);//为文件创建目录项
+    void CreatDir(string owner,string filename);//为文件创建目录项
     void ShowDirMan(string x);//遍历显示当前的所有目录项
     void ShowDirMan();
 };
@@ -105,7 +106,8 @@ void DirMan::CreatNullDir(string x){ //x是 文件拥有者；
     dir.Dir::setFileName("NULLFILE");
     //文件结构
     dir.Dir::setFileStructure("NULL");
-    DirMap.insert(map<string, Dir>::value_type(dir.FileName, dir));
+   // DirMap.insert(map<string, Dir>::value_type(dir.FileName, dir));
+    DirMap.insert(map<string, Dir>::value_type(dir.FileOwner, dir));
 }
 
 void DirMan::DelNullDir(){
@@ -144,6 +146,20 @@ void DirMan::CreatDir(string owner,string filename,string structer){
     DirMap.insert(map<string, Dir>::value_type(dir.FileName, dir));
     cout<<dir.FileName<<"已创建成功"<<endl;
 }
+
+void DirMan::CreatDir(string owner,string filename){
+    Dir dir;
+    //时间 kk4
+    dir.Dir::setDate(TimeGen());
+    //拥有者
+    dir.Dir::setFileOwner(owner);
+    //文件名
+    dir.Dir::setFileName(filename);
+    //加入目录
+    DirMap.insert(map<string, Dir>::value_type(dir.FileName, dir));
+    cout<<dir.FileName<<"已创建成功"<<endl;
+}
+
 
 void DirMan::ShowDirMan(string x){
     map<string,Dir>::iterator it;

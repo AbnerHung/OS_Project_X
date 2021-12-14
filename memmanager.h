@@ -2,6 +2,7 @@
 #define _M_H_
 #include <iostream>
 #include <queue>
+#include<iomanip>
 
 using namespace std;
 
@@ -153,8 +154,14 @@ class Memory { //内存
 			return 0;
 		}
 		void show() { //显示内存数据
-			for(int i=0; i<16; i++) {
-				cout<<i<<" "<<Mem[i].sign<<" "<<Mem[i].thread_id<<" "<<Mem[i].name<<" "<<Mem[i].datasize<<" "<<Mem[i].message<<endl;
+            cout<<left<<setw(6)<<"index"<<left<<setw(11)<<"sign"<<left<<setw(11)<<"thread_id"<<left<<setw(11)<<"thread_name"<<left<<setw(10)<<"data_size"<<left<<setw(9)<<"content"<<endl;
+            for(int i=0; i<16; i++) {
+                    cout<<left<<setw(6)<<i<<" "<<
+                        left<<setw(11)<<Mem[i].sign<<" "<<
+                        left<<setw(11)<<Mem[i].thread_id<<" "<<
+                        left<<setw(11)<<Mem[i].name<<" "<<
+                        left<<setw(10)<<Mem[i].datasize<<" "<<
+                        left<<setw(9)<<Mem[i].message<<endl;
 			}
 		}
 
