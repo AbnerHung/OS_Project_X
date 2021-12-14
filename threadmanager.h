@@ -41,7 +41,7 @@ void ThreadMan::Generate(int data_size,string file_name,int Thread_id)  //数据
     string content;
     content=randst(data_size);
     //cout<<content<<endl;
-    A_Disk.CreateFile(file_name,content);
+    A_Disk.createFile(file_name, content);
     Dirs.CreatDir("admin",file_name,"");
     cout<<"当前目录内容"<<endl;
     Dirs.ShowDirMan();

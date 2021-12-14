@@ -13,18 +13,18 @@ class diskmanager {
     diskmanager(){
       this->thedisk.initiate();
     }
-    int CreateFile(string filename, string data); // 写入数据区，满了的话就返回0，成功写入返回1
-    string ReadFile(string filename);
-    int DeleteFile(string filename); // 删除数据，
+    int createFile(string filename, string data); // 写入数据区，满了的话就返回0，成功写入返回1
+    string readFile(string filename);
+    int deleteFile(string filename); // 删除数据，
     int swap(string data);
-    int DelSwap(int swapblocknum);
+    int delSwap(int swapblocknum);
     const disk &getThedisk() const;
 //private:
     disk thedisk; // 代表disk
     map<string, inode> inodes; // string = 文件夹+文件名
 };
 
-int diskmanager::CreateFile(string filename, string data) {
+int diskmanager::createFile(string filename, string data) {
   // 创建一个文件, data是文件的数据，filename 是文件的绝对路径
   inode File;
   // 如果磁盘空间足够
@@ -46,7 +46,7 @@ const disk &diskmanager::getThedisk() const {
     return thedisk;
 }
 
-string diskmanager::ReadFile(string filename) {
+string diskmanager::readFile(string filename) {
   inode File;
   string data = "";
   File = this->inodes[filename];
@@ -56,7 +56,7 @@ string diskmanager::ReadFile(string filename) {
   }
   return data;
 }
-int diskmanager::DeleteFile(string filename) {
+int diskmanager::deleteFile(string filename) {
   if (this->inodes.find(filename) == inodes.end()){
     return 0;   // 如果不存在这个文件返回0
   }
@@ -76,7 +76,7 @@ int diskmanager::swap(string data) {
   }
   return 0;
 }
-int diskmanager::DelSwap(int swapblocknum) {
+int diskmanager::delSwap(int swapblocknum) {
   if(this->thedisk.delete_swap(swapblocknum)){
     return 1;
   }

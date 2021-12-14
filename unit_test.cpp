@@ -46,9 +46,9 @@ int main(){
   A_Disk.getThedisk().showSpareDataDisk();
 
   Dirs.CreatDir("admin", "test3", "1");
-  A_Disk.CreateFile("test3", "123bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb456cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
+  A_Disk.createFile("test3", "123bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb456cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
   Dirs.ShowDirMan();
-  cout << "test3 Data is " << A_Disk.ReadFile("test3") << endl;
+  cout << "test3 Data is " << A_Disk.readFile("test3") << endl;
 
   cout << "--------------" << endl;
   Mems.Alloc(3, "test2");
@@ -56,7 +56,7 @@ int main(){
   cout << "--------------" << endl;
   Mems.Alloc(5, "test1");
   Mems.show();*/
-    Usrs *users;
+   /* Usrs *users;
    // users->init();
     //users->restore();
     users->addUser();
@@ -66,7 +66,10 @@ int main(){
     for(auto i : LoginUsers) {
         cout<< i.userName <<" ";
     };
-    cout<<"\n";
-
+    cout<<"\n";*/
+    Usrs users;
+    users.Reg();
+    users.Login();
+    cout<<users.usrs_name<<"\n";
     return 0;
 }

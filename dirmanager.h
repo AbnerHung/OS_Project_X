@@ -123,7 +123,7 @@ void DirMan::DelFile(string x){
     int t= Mems.InMem(x);
     if(!t){
         DirMap.erase(x); //删除目录
-        A_Disk.DeleteFile(x); //此处需要删除文件在磁盘中对应的数据；
+        A_Disk.deleteFile(x); //此处需要删除文件在磁盘中对应的数据；
     }
     else
     {
@@ -195,8 +195,8 @@ void Folder::setFolderDate(string c1) {
 class FolderManagement{
 public:
     FolderManagement();
-    map<string,Folder> DirFileMAP;
 
+    map<string,Folder> DirFileMAP;
 
     FolderManagement(const string &uId);
     void creatNullFolder(string x);
@@ -269,6 +269,7 @@ void FolderManagement::createFolder(string owner, string filename) {
     //加入目录
     DirFileMAP.insert(map<string, Folder>::value_type(dirfile.folderName, dirfile));
     cout << dirfile.folderName << "已创建成功" << endl;
+    fflush(stdout);
 }
 void FolderManagement::showFolderManagement(string x) {
     map<string,Folder>::iterator it;
@@ -290,7 +291,7 @@ void FolderManagement::setUId(const string &uId) {
 }
 
 FolderManagement::FolderManagement(const string &uId) : uId(uId) {
-
+    setUId(uId);
 }
 
 FolderManagement::FolderManagement() {

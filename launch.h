@@ -6,32 +6,45 @@
 #define OPROJECT1_LAUNCH_H
 #include<iostream>
 #include "dirmanager.h"
+#include "Usrs.h"
 using namespace  std;
 
 class launch {
 private:
+
     vector<FolderManagement> Users;
     int level = 0;
     FolderManagement *currentUser = nullptr;
     DirMan file;
     Folder current_folder;
-
+    Usrs users;
     diskmanager store_disk;
 public:
     void welcome();
     void login();
+    void reg();
     void create_User();
     void create_file();
     void create_folder();
     void ls();
     void rmfolder();
     void rmfile();
+    void cd();
 
 };
 void launch::welcome() {
-
     login();
-    cout<<"root@localhost:/linux/$";
+    if(this->level) {
+        cout<<currentUser->uId<<"@localhost:/root/"<<currentUser->uId;
+        if(this->level == 2) {
+            cout<<"/"<<current_folder.folderName;
+        }
+        cout<<"/:$ ";
+    } else {
+        cout<<"root@localhost:/root/$";
+    }
+
+    fflush(stdout);
     string cmd;
     while (cin >> cmd) {
         if(cmd=="create_User"){
@@ -49,9 +62,11 @@ void launch::welcome() {
             this->rmfolder();
         }else if (cmd == "rm_file") {
             this->rmfile();
+        }else if (cmd == "useradd") {
+            this->reg();
         }
         else if (cmd == "cd") {
-//            this->cd(); // level =1;
+            this->cd(); // level =1;
         } else if (cmd == "open") {  //内容打印出来c
             string filename = "";
             cin>>filename;
@@ -79,15 +94,52 @@ void launch::welcome() {
         } else {
             cout << "No command '"<<cmd<<"' found, please try again" << endl;
         }
-        if(level) {
-            cout<<currentUser->uId<<"@localhost:/linux/:$ ";
+        if(this->level) {
+            cout<<currentUser->uId<<"@localhost:/root/"<<currentUser->uId;
+            if(this->level == 2) {
+                cout<<"/"<<current_folder.folderName;
+            }
+            cout<<"/:$ ";
         } else {
-            cout<<"root@localhost:/linux/:$ ";
+            cout<<"root@localhost:/root/$";
         }
 
     }
 }
-
+void launch::cd(){
+    string next;
+    cin>>next;
+    if(next==".."){//????????????????????????????? there is a bug
+        if(this->level == 1){
+            // this->currentUser = nullptr;
+            this->level = 0;
+            return ;
+        } else if(this->level == 2) {
+            this->level = 1;
+            return ;
+        }
+        else{
+            cout<<"can not cd dirs!!!!!"<<endl;
+            return ;
+        }
+    } else if(this->level == 0){
+        for(int i=0;i<this->Users.size();i++){
+            if(Users[i].uId==next){
+                this->currentUser = &Users[i];
+                this->level = 1;
+                return;
+            }
+        }
+    } else if(this->level == 1) {
+        if(this->currentUser->checkFolder(next)) {
+            this->level = 2;
+            this->current_folder  = this->currentUser->DirFileMAP[next];
+            return;
+        }
+    }
+    cout<<"cd: "<<next<<": No such file or directory\n";
+    this->level = 0;
+}
 void launch::create_User() {
     string name  =" ";
     cin>>name;
@@ -103,7 +155,7 @@ void launch::create_file() {
     cout<<"please input your data"<<endl;
     string data;
     cin>>data;
-    this->store_disk.CreateFile(filename,data);
+    this->store_disk.createFile(filename,data);
 }
 void launch::create_folder(){
     string folder_name;
@@ -112,14 +164,18 @@ void launch::create_folder(){
 }
 void launch::ls(){
     if(!this->level){
-        for(int i=0;i<this->Users.size();i++)
-                cout<<this->Users[i].uId<<" ";
-            cout<<endl;
-    }
-    else{ //输出DirManager的索引中文件？？？？？？？？？？？？？？？？？？？？？？？？？
-        for(auto i= this->file.DirMap.begin();i!=this->file.DirMap.end();i++){
-            cout<<i->first; //输出当前目录的文件
+        for(int i=0;i<this->Users.size();i++) {
+            cout<<this->Users[i].uId<<" ";
+            fflush(stdout);
         }
+        cout<<endl;
+    } else if(this->level == 1){ //输出DirManager的索引中文件？？？？？？？？？？？？？？？？？？？？？？？？？
+        this->currentUser->showFolderManagement(currentUser->uId);
+        /*for(auto i= this->file.DirMap.begin();i!=this->file.DirMap.end();i++){
+            cout<<i->first; //输出当前目录的文件
+        }*/
+    } else if(this->level == 2) {
+        this->file.ShowDirMan(currentUser->uId);
     }
 }
 void launch::rmfolder() {
@@ -137,10 +193,22 @@ void launch::rmfile() {
 }
 void launch::login() {
     cout<<"----------------------------------------------------\n";
+    fflush(stdout);
     cout<<"----------------Operating System DEMO---------------\n";
+    fflush(stdout);
     cout<<"----------------------------------------------------\n";
+    fflush(stdout);
     cout<<"----------------------login-------------------------\n";
+    fflush(stdout);
+    users.Login();
+}
 
+void launch::reg() {
+    cout<<"-------------------register------------------------\n";
+    fflush(stdout);
+    users.Reg();
+    this->currentUser = new FolderManagement(users.usrs_name);
+    Users.push_back(*currentUser);
 }
 
 
