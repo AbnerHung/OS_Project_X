@@ -1,0 +1,4 @@
+F:/c++/OS/oproject1/out/build/x64-Debug/CMakeFiles/testlib.dir
+F:/c++/OS/oproject1/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+F:/c++/OS/oproject1/out/build/x64-Debug/CMakeFiles/test.dir
+F:/c++/OS/oproject1/out/build/x64-Debug/CMakeFiles/edit_cache.dir

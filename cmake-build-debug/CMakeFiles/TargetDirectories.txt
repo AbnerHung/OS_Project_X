@@ -1,0 +1,6 @@
+F:/c++/OS/oproject1/cmake-build-debug/CMakeFiles/testlib.dir
+F:/c++/OS/oproject1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+F:/c++/OS/oproject1/cmake-build-debug/CMakeFiles/test.dir
+F:/c++/OS/oproject1/cmake-build-debug/CMakeFiles/edit_cache.dir
+F:/c++/OS/oproject1/cmake-build-debug/CMakeFiles/threadmanager.dir
+F:/c++/OS/oproject1/cmake-build-debug/CMakeFiles/launch.dir
