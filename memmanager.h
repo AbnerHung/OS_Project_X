@@ -3,9 +3,7 @@
 #include <iostream>
 #include <queue>
 #include<iomanip>
-
 using namespace std;
-
 class Data {
 public:
     Data() {
@@ -31,15 +29,14 @@ public:
 
 class Memory { //内存
 	public:
-		Data Mem [16];
+		Data Mem [64];
 
 		Memory() {
 			pos=0;
-			free=16;
+			free=64;
 			u=0;
 		}
 		int pos;
-		
 		int Ex_i[500]; //用于存地址 
 		int u;
 		int free;//空闲块数
@@ -58,7 +55,7 @@ class Memory { //内存
 				} else Mb_num=str.length()/4+1;
 				if(Mb_num<=free) {
 					for(int i=0; i<Mb_num; i++) {
-						for(int j=0; j<16; j++) {
+						for(int j=0; j<64; j++) {
 							if(Mem[j].sign==0) {
 								Mem[j].thread_id=thread_id;
 								Mem[j].name=name;
@@ -71,8 +68,7 @@ class Memory { //内存
 									Mem[j].datasize=str.length()-(Mb_num-1)*4;
 									Mem[j].message=str.substr(pos);
 									pos=0;
-								}
-								q.push(j);
+								} q.push(j);
 								break;
 							}
 						}
@@ -80,7 +76,7 @@ class Memory { //内存
 					free=free-Mb_num;
 				} else { //需要置换
 					for(int i=0; i<free; i++) {
-						for(int j=0; j<16; j++) {
+						for(int j=0; j<64; j++) {
 							if(Mem[j].sign==0) {
 								Mem[j].thread_id=thread_id;
 								Mem[j].name=name;
@@ -123,11 +119,9 @@ class Memory { //内存
 		}
 
 		int Delete(int thread_id) { //释放内存
-			//  (int thread_id)
-			//thread_id  线程id   将所有与threadid一样的块删了回收，通知磁盘删了对换区
 			int F=q.front();
 			int G=free;
-			for(int i=0; i<16-G; i++) { //删除回收，修改free、队列q
+			for(int i=0; i<64-G; i++) { //删除回收，修改free、队列q
 				int a=q.front();
 				q.pop();
 				if(Mem[a].thread_id==thread_id) {
@@ -135,7 +129,6 @@ class Memory { //内存
 					free++;
 				} else q.push(a);
 			}
-
 			for(int i=1; i<u; i+=2) { //调用磁盘管理的函数删除兑换区对应的文件
 				if(Ex_i[i]==thread_id) {
                     A_Disk.delSwap(Ex_i[i - 1]);
@@ -147,7 +140,7 @@ class Memory { //内存
 			return 1;
 		}
 		int InMem(string name) { //判断文件是否在内存
-			for(int i=0; i<16; i++) {
+			for(int i=0; i<64; i++) {
 				if(Mem[i].name==name)
 					return 1;
 			}
@@ -155,7 +148,7 @@ class Memory { //内存
 		}
 		void show() { //显示内存数据
             cout<<left<<setw(6)<<"index"<<left<<setw(11)<<"sign"<<left<<setw(11)<<"thread_id"<<left<<setw(11)<<"thread_name"<<left<<setw(10)<<"data_size"<<left<<setw(9)<<"content"<<endl;
-            for(int i=0; i<16; i++) {
+            for(int i=0; i<64; i++) {
                     cout<<left<<setw(6)<<i<<" "<<
                         left<<setw(11)<<Mem[i].sign<<" "<<
                         left<<setw(11)<<Mem[i].thread_id<<" "<<
@@ -164,7 +157,6 @@ class Memory { //内存
                         left<<setw(9)<<Mem[i].message<<endl;
 			}
 		}
-
 };
 Memory Mems;
 

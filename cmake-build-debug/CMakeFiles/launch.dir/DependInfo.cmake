@@ -1,14 +1,15 @@
-
-# Consider dependencies only in project.
-set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
-
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
+  "CXX"
   )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_CXX
+  "D:/jetbrains toolbox/project/OS_Project_X/launch.cpp" "D:/jetbrains toolbox/project/OS_Project_X/cmake-build-debug/CMakeFiles/launch.dir/launch.cpp.obj"
+  )
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
-# The set of dependency files which are needed:
-set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "F:/c++/OS/oproject1/launch.cpp" "CMakeFiles/launch.dir/launch.cpp.obj" "gcc" "CMakeFiles/launch.dir/launch.cpp.obj.d"
+# The include file search paths:
+set(CMAKE_CXX_TARGET_INCLUDE_PATH
   )
 
 # Targets to which this target links.

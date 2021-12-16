@@ -50,18 +50,15 @@ void launch::welcome() {
     fflush(stdout);
     string cmd;
     while (cin >> cmd) {
-        if(cmd=="create_User"){
-            this->create_User();
-            cout<<"successful create user"<<endl;
-        } else if(cmd == "mkdir"){  //create folder
+         if(cmd == "mkdir"){  //create folder
             this->create_folder();
-        } else if (cmd == "create_file") {
+        } else if (cmd == "touch") {
             this->create_file();
         } else if (cmd == "ls") {
             this->ls();
         } else if (cmd == "rmdir") {
             this->rmfolder();
-        } else if (cmd == "rm_file") {
+        } else if (cmd == "rmfile") {
             this->rmfile();
         } else if (cmd == "showBitMap" || cmd == "show_bitmap"|| cmd == "shbitmap"|| cmd == "shbtm") {
             this->showBitMap();
@@ -71,28 +68,26 @@ void launch::welcome() {
             this->threadDemo();
         } else if (cmd == "cd") {
             this->cd(); // level =1;
-        } else if (cmd == "open") {  //内容打印出来c
+        } else if (cmd == "read") {  //内容打印出来c
             string filename = "";
             cin>>filename;
             cout<<this->store_disk.readFile(filename)<<endl;
         }
-        //else if (cmd == "close") {
-//            this->close();}
          else if (cmd == "exit") {
             printf("%s\n", "再见！");
             break;
         } else if (cmd == "help") {
-            cout << "\n#format:对文件存储器进行格式化.\n" <<
+            cout <<
+                 "#useradd:  创建用户\n" <<
                  "#mkdir:  创建文件夹\n" <<
                  "#rmdir : 删除文件夹\n" <<
                  "#ls :    显示目录\n" <<
                  "#cd :    切换当前目录\n" <<
-                 "#create :创建文件\n" <<
-                 "#open :  打开文件\n" <<
-                 "#close : 关闭文件\n" <<
-                 "#write : 写文件\n" <<
-                 "#read :  读文件\n" <<
-                 "#rm :    删除文件\n" <<
+                 "#touch :创建文件\n" <<
+                 "#read :  打开文件\n" <<
+                 "#rmfile:    删除文件\n" <<
+                 "#t_demo:  线程的使用\n" <<
+                 "#show_bitmap:  显示位视图\n" <<
                  "#exit : 退出系统\n"
                  << endl;
         } else {
@@ -113,7 +108,7 @@ void launch::welcome() {
 void launch::cd(){
     string next;
     cin>>next;
-    if(next==".."){//????????????????????????????? there is a bug
+    if(next==".."){
         if(this->level == 1){
             // this->currentUser = nullptr;
             this->level = 0;
@@ -143,12 +138,6 @@ void launch::cd(){
     }
     cout<<"cd: "<<next<<": No such file or directory\n";
 
-}
-void launch::create_User() {
-    string name  =" ";
-    cin>>name;
-    FolderManagement *temp = new FolderManagement(name);
-    this->Users.push_back(*temp);
 }
 void launch::create_file() {
     string filename = "";
@@ -180,9 +169,6 @@ void launch::ls(){
         cout<<endl;
     } else if(this->level == 1){ //输出DirManager的索引中文件？？？？？？？？？？？？？？？？？？？？？？？？？
         this->currentUser->showFolderManagement(currentUser->uId);
-        /*for(auto i= this->file.DirMap.begin();i!=this->file.DirMap.end();i++){
-            cout<<i->first; //输出当前目录的文件
-        }*/
     } else if(this->level == 2) {
         this->file.ShowDirMan(this->current_folder.folderName);
     }
@@ -191,13 +177,16 @@ void launch::rmfolder() {
     string folder_name;
     cin>>folder_name;
     //直接删除
-    currentUser->DirFileMAP.erase(folder_name);
+    this->currentUser->delFolder(folder_name);
+//    currentUser->DirFileMAP.erase(folder_name);
 }
 void launch::rmfile() {
     string filename;
     cin>>filename;
-    this->file.DirMap.erase(filename);
-    //清除数据？？？？？？？？？？？？？？？？？？？？？？？
+    this->file.DelFile(filename);
+    this->store_disk.deleteFile(filename);
+//    this->file.DirMap.erase(filename);
+
 
 }
 void launch::showBitMap() {
@@ -224,6 +213,10 @@ void launch::login() {
 }
 
 void launch::reg() {
+    if(this->level!=0){
+        cout<<"pemssion denied!"<<endl;
+        return;
+    }
     cout<<"-------------------register------------------------\n";
     fflush(stdout);
     users.Reg();

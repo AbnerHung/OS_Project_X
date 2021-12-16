@@ -1,4 +1,4 @@
-ToolSet: w64 9.0 (local)@F:\CLion\CLion 2021.3\bin\mingw
+ToolSet: w64 6.0 (local)@D:\ming\mingw64
 Options: 
 
 Options:

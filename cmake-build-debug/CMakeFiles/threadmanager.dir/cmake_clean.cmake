@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/threadmanager.dir/threadmanager.cpp.obj"
-  "CMakeFiles/threadmanager.dir/threadmanager.cpp.obj.d"
   "libthreadmanager.dll.a"
   "threadmanager.exe"
   "threadmanager.exe.manifest"

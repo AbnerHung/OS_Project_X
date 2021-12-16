@@ -1,6 +1,6 @@
 #define BLOCK_SIZE 4.0 //单位 byte
 #define DIRECT_NUM 10
-#define INDEX_TABLE_SIZE 10
+#define INDEX_TABLE_SIZE 16
 #define BLOCK_ADDR_SIZE 10
 #define DISK_SIZE 4096
 #define BLOCKNUM 1024

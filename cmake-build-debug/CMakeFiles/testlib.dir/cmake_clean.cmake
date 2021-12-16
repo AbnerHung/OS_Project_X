@@ -1,8 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/testlib.dir/threadmanager.cpp.obj"
-  "CMakeFiles/testlib.dir/threadmanager.cpp.obj.d"
   "CMakeFiles/testlib.dir/unit_test.cpp.obj"
-  "CMakeFiles/testlib.dir/unit_test.cpp.obj.d"
   "libtestlib.a"
   "libtestlib.pdb"
 )

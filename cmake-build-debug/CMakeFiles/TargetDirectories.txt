@@ -1,6 +1,6 @@
-F:/c++/OS/oproject1/cmake-build-debug/CMakeFiles/testlib.dir
-F:/c++/OS/oproject1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-F:/c++/OS/oproject1/cmake-build-debug/CMakeFiles/test.dir
-F:/c++/OS/oproject1/cmake-build-debug/CMakeFiles/edit_cache.dir
-F:/c++/OS/oproject1/cmake-build-debug/CMakeFiles/threadmanager.dir
-F:/c++/OS/oproject1/cmake-build-debug/CMakeFiles/launch.dir
+D:/jetbrains toolbox/project/OS_Project_X/cmake-build-debug/CMakeFiles/testlib.dir
+D:/jetbrains toolbox/project/OS_Project_X/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+D:/jetbrains toolbox/project/OS_Project_X/cmake-build-debug/CMakeFiles/test.dir
+D:/jetbrains toolbox/project/OS_Project_X/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/jetbrains toolbox/project/OS_Project_X/cmake-build-debug/CMakeFiles/threadmanager.dir
+D:/jetbrains toolbox/project/OS_Project_X/cmake-build-debug/CMakeFiles/launch.dir

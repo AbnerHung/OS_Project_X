@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/launch.dir/launch.cpp.obj"
-  "CMakeFiles/launch.dir/launch.cpp.obj.d"
   "launch.exe"
   "launch.exe.manifest"
   "launch.pdb"

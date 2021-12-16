@@ -36,11 +36,8 @@ string ThreadMan::randst(int n)
 }
 void ThreadMan::Generate(int data_size,string file_name,int Thread_id)  //数据生成功能
 {
-    //(*pmt).lock();
-
     string content;
     content=randst(data_size);
-    //cout<<content<<endl;
     A_Disk.createFile(file_name, content);
     Dirs.CreatDir("admin",file_name,"");
     cout<<"当前目录内容"<<endl;

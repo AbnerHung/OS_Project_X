@@ -1,3 +1,3 @@
-"F:\CLion\CLion 2021.3\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\launch.dir/objects.a
-"F:\CLion\CLion 2021.3\bin\mingw\bin\ar.exe" qc CMakeFiles\launch.dir/objects.a @CMakeFiles\launch.dir\objects1.rsp
-"F:\CLion\CLion 2021.3\bin\mingw\bin\g++.exe" -g -Wl,--whole-archive CMakeFiles\launch.dir/objects.a -Wl,--no-whole-archive -o launch.exe -Wl,--out-implib,liblaunch.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\launch.dir\linklibs.rsp
+"D:\jetbrains toolbox\apps\CLion\ch-0\203.5981.166\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\launch.dir/objects.a
+D:\ming\mingw64\bin\ar.exe cr CMakeFiles\launch.dir/objects.a @CMakeFiles\launch.dir\objects1.rsp
+D:\ming\mingw64\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\launch.dir/objects.a -Wl,--no-whole-archive  -o launch.exe -Wl,--out-implib,liblaunch.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\launch.dir\linklibs.rsp
