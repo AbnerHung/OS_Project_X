@@ -7,7 +7,6 @@
 using namespace std;
 
 class disk{
-  //混合索引, 0-9是直接索引, 10是一级索引, 11是二级索引，12是三级索引
   public:
     vector<int> write(string data, int datablocknum);
     string read(int blockindex);
@@ -33,6 +32,7 @@ void disk::initiate(){
   memset(this->spareswapdisk, 0, sizeof(this->spareswapdisk));
   sparedatablock = DATA_BLOCK_NUM;
 }
+
 // 检查是否有足够的空间
 bool disk::enough_block(int datablocknum){
   if (datablocknum <= sparedatablock) {
@@ -47,10 +47,8 @@ vector<int> disk::write(string data, int datablocknum){
     // 空间不够返回空的 tmp，后续可以用 tmp.empty 来判断
     return tmp;
   }
-
   int data_point=0; //指向下一个写入磁盘的数据的第一个，每次加4
   int datasize = data.size(); //用于判断最后一个字符
-
   // 每个块号一个一个的找，看哪个是空的
   for (int i=0; i < DATA_BLOCK_NUM; i++){  //文件块分配按照链接组织
       // 如果为空的话
@@ -64,7 +62,6 @@ vector<int> disk::write(string data, int datablocknum){
       this->sparedatablock = this->sparedatablock - 1;
       datablocknum --;
     }
-
     // 分配完成就退出
     if (datablocknum == 0)  break; 
   }
