@@ -1,3 +1,0 @@
-"D:\jetbrains toolbox\apps\CLion\ch-0\203.5981.166\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\threadmanager.dir/objects.a
-D:\ming\mingw64\bin\ar.exe cr CMakeFiles\threadmanager.dir/objects.a @CMakeFiles\threadmanager.dir\objects1.rsp
-D:\ming\mingw64\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\threadmanager.dir/objects.a -Wl,--no-whole-archive  -o threadmanager.exe -Wl,--out-implib,libthreadmanager.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\threadmanager.dir\linklibs.rsp

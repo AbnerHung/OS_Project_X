@@ -1,2 +1,0 @@
-D:\ming\mingw64\bin\ar.exe qc libtestlib.a  CMakeFiles/testlib.dir/threadmanager.cpp.obj CMakeFiles/testlib.dir/unit_test.cpp.obj
-D:\ming\mingw64\bin\ranlib.exe libtestlib.a
