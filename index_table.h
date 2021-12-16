@@ -6,9 +6,9 @@
 using namespace std;
 
 // direct_index_table 类
-class direct_index_table{
+class IndexTableNode{
   public:
-    direct_index_table(){
+    IndexTableNode(){
       for (int i = 0; i < INDEX_TABLE_SIZE; ++i) {
         this->blockindex[i] = -1;
       }
@@ -19,7 +19,7 @@ class direct_index_table{
     int length=0;
     int blockindex[INDEX_TABLE_SIZE];
 };
-vector<int> direct_index_table::get_elem(){
+vector<int> IndexTableNode::get_elem(){
   vector<int> tmp;
   for (int i = 0; i < INDEX_TABLE_SIZE; i++) {
     if (this->blockindex[i] != -1){
@@ -28,7 +28,7 @@ vector<int> direct_index_table::get_elem(){
   }
   return tmp;
 }
-bool direct_index_table::write(int blocknum){
+bool IndexTableNode::write(int blocknum){
   if (length < INDEX_TABLE_SIZE){
     this->blockindex[this->length] = blocknum;
     this->length ++;
@@ -37,15 +37,16 @@ bool direct_index_table::write(int blocknum){
   return false;
 }
 
+
 // index_table_one 类
-class index_table_one{
+class FirstLevelIndexBlock{
   public:
     vector<int> get_all_block_index();
     bool write(int blocknum);
   private:
-    direct_index_table index_table_first[INDEX_TABLE_SIZE];//13
+    IndexTableNode index_table_first[INDEX_TABLE_SIZE];//13
 };
-vector<int> index_table_one::get_all_block_index(){
+vector<int> FirstLevelIndexBlock::get_all_block_index(){
   vector<int> tmp;
   for (int i = 0; i < INDEX_TABLE_SIZE; i++) {
     vector<int> elems = this->index_table_first[i].get_elem();
@@ -56,7 +57,7 @@ vector<int> index_table_one::get_all_block_index(){
   }
   return tmp;
 }
-bool index_table_one::write(int blocknum){
+bool FirstLevelIndexBlock::write(int blocknum){
   for (int i = 0; i < INDEX_TABLE_SIZE; i++) {
     if (this->index_table_first[i].write(blocknum)) {
       return true;
