@@ -1,7 +1,7 @@
 #include <iostream>
 #include <assert.h>
 #include "define.h"
-#include "diskmanager.h"
+#include "DiskManager.h"
 #include "dirmanager.h"
 #include "memmanager.h"
 #include "Usrs.h"
@@ -9,53 +9,61 @@
 using namespace std;
 
 int main(){
-/*
-    Folders.createFolder("amd", "file1");
-    Folders.createFolder("amd", "file2");
-    Folders.showFolderManagement("amd");
-    Dirs.CreatDir("file1", "test1", "1");
-    Dirs.CreatDir("file1", "test2", "1");
-    Dirs.CreatDir("file1", "test3", "1");
-    Dirs.ShowDirMan("file1");
-    */
-    /*
-  // 目录管理和磁盘管理测试
-  Dirs.CreatDir("admin", "test1", "1");
-  A_Disk.CreateFile("test1", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
-  Dirs.CreatDir("admin", "test2", "1");
-  A_Disk.CreateFile("test2", "dsfasdf");
 
-  Dirs.ShowDirMan();
-  cout << "Data is " << A_Disk.ReadFile("test1") << endl;
-  assert(""==A_Disk.ReadFile("test1"));
+    ADisk.createFile("test1", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
 
-  cout<<"位示图:\n";
-  A_Disk.getThedisk().showSpareDataDisk();
+    cout << "Data is " << ADisk.readFile("test1") << endl;
+    assert("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"==ADisk.ReadFile("test1"));
 
-  cout << "Data is " << A_Disk.ReadFile("test2") << endl;
-  assert("dsfasdf"==A_Disk.ReadFile("test2"));
+    cout<<"位示图:\n";
+    ADisk.getThedisk().showSpareDataDisk();
 
-  cout<<"位示图:\n";
-  A_Disk.getThedisk().showSpareDataDisk();
+    ADisk.createFile("test2", "dsfasdafjkhalksfdhlasasjkdhff");
 
-  Dirs.delFolder("test1");
-  cout << "After Delete " << A_Disk.ReadFile("test1") << endl;
-  assert(""==A_Disk.ReadFile("test1"));
+    cout << "Data is " << ADisk.readFile("test2") << endl;
+    assert("dsfasdafjkhalksfdhlasasjkdhff"==ADisk.ReadFile("test2"));
 
-  cout<<"位示图:\n";
-  A_Disk.getThedisk().showSpareDataDisk();
+    cout<<"位示图:\n";
+    ADisk.getThedisk().showSpareDataDisk();
 
-  Dirs.CreatDir("admin", "test3", "1");
-  A_Disk.createFile("test3", "123bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb456cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
-  Dirs.ShowDirMan();
-  cout << "test3 Data is " << A_Disk.readFile("test3") << endl;
 
-  cout << "--------------" << endl;
-  Mems.Alloc(3, "test2");
-  Mems.show();
-  cout << "--------------" << endl;
-  Mems.Alloc(5, "test1");
-  Mems.show();*/
+
+    cout<<"位示图:\n";
+    ADisk.getThedisk().showSpareDataDisk();
+
+    ADisk.createFile("test3", "12344532523462363262346234623k6jh34klj6hl34kh  7");
+
+    cout << "test3 Data is " << ADisk.readFile("test3") << endl;
+    cout<<"位示图:\n";
+    ADisk.getThedisk().showSpareDataDisk();
+    ADisk.deleteFile("test2");
+    cout << "After Delete " << ADisk.readFile("test2") << endl;
+    assert(""==ADisk.ReadFile("test2"));
+    cout<<"位示图:\n";
+    ADisk.getThedisk().showSpareDataDisk();
+
+    ADisk.createFile("test4", "111111111111111111111111111111111111111111111111111111111111111");
+
+    cout << "test4 Data is " << ADisk.readFile("test4") << endl;
+    cout<<"位示图:\n";
+    ADisk.getThedisk().showSpareDataDisk();
+
+    ADisk.createFile("test5", "2222222222222222222222222222222222222222222222222222222222222222");
+    cout << "test5 Data is " << ADisk.readFile("test4") << endl;
+    cout<<"位示图:\n";
+    ADisk.getThedisk().showSpareDataDisk();
+
+    ADisk.createFile("test6", "3333333333333333333333333333333333333333333333333333333333333333");
+
+    cout << "test5 Data is " << ADisk.readFile("test4") << endl;
+    cout<<"位示图:\n";
+    ADisk.getThedisk().showSpareDataDisk();
+
+    ADisk.deleteFile("test5");
+    cout << "After Delete " << ADisk.readFile("test5") << endl;
+    assert(""==ADisk.ReadFile("test5"));
+    cout<<"位示图:\n";
+    ADisk.getThedisk().showSpareDataDisk();
    /* Usrs *users;
    // users->init();
     //users->restore();
@@ -67,9 +75,10 @@ int main(){
         cout<< i.userName <<" ";
     };
     cout<<"\n";*/
+   /*
     Usrs users;
     users.Reg();
     users.Login();
-    cout<<users.usrs_name<<"\n";
+    cout<<users.usrs_name<<"\n";*/
     return 0;
 }

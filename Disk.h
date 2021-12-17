@@ -6,15 +6,16 @@
 #include "define.h"
 using namespace std;
 
-class disk{
+class Disk{
   public:
-    vector<int> write(string data, int datablocknum);
+    vector<int> write(const string& data, int datablocknum);
     string read(int blockindex);
-    bool enough_block(int datablocknum);
-    bool delete_block(int blockindex);
-    string read_swap(int blockindex);
-    int write_swap(string datablock);
-    int delete_swap(int blockindex);
+    bool enoughBlock(int datablocknum) const;
+    bool deleteBlock(int blockindex);
+    string readSwap(int blockindex);
+    int writeSwap(const string& datablock);
+    int deleteSwap(int blockindex);
+
     void showSpareDataDisk() const;
     void initiate();
 
@@ -26,24 +27,24 @@ class disk{
     int sparedatablock;
 };
 
-// 初始化 disk
-void disk::initiate(){
+// 初始化 Disk
+void Disk::initiate(){
   memset(this->sparedatadisk, 0, sizeof(this->sparedatadisk));
   memset(this->spareswapdisk, 0, sizeof(this->spareswapdisk));
   sparedatablock = DATA_BLOCK_NUM;
 }
 
 // 检查是否有足够的空间
-bool disk::enough_block(int datablocknum){
+bool Disk::enoughBlock(int datablocknum) const{
   if (datablocknum <= sparedatablock) {
     return true;
   }
   return false;
 }
 
-vector<int> disk::write(string data, int datablocknum){
+vector<int> Disk::write(const string& data, int datablocknum){
   vector<int> tmp;
-  if (!this->enough_block(datablocknum)) {
+  if (!this->enoughBlock(datablocknum)) {
     // 空间不够返回空的 tmp，后续可以用 tmp.empty 来判断
     return tmp;
   }
@@ -65,11 +66,10 @@ vector<int> disk::write(string data, int datablocknum){
     // 分配完成就退出
     if (datablocknum == 0)  break; 
   }
-
   return tmp; //返回所有写入区块的地址
 }
 
-bool disk::delete_block(int blockindex){
+bool Disk::deleteBlock(int blockindex){
   if (sparedatadisk[blockindex] == 1){
     this->sparedatadisk[blockindex] = 0;
     this->datapart[blockindex] = ""; //没有数据
@@ -80,11 +80,11 @@ bool disk::delete_block(int blockindex){
   return false;
 }
 
-string disk::read(int blockindex){
+string Disk::read(int blockindex){
   return this->datapart[blockindex];
 }
 
-int disk::write_swap(string datablock) { // 没有的时候返回-1
+int Disk::writeSwap(const string& datablock) { // 没有的时候返回-1
   for (int i = 0; i < SWAP_BLOCK_NUM; ++i) {
     if(this->spareswapdisk[i]==0){
       this->spareswapdisk[i] = 1;
@@ -94,17 +94,19 @@ int disk::write_swap(string datablock) { // 没有的时候返回-1
   }
   return -1;
 }
-string disk::read_swap(int blockindex) {
+string Disk::readSwap(int blockindex) {
   return this->swappart[blockindex];
 }
-int disk::delete_swap(int blockindex) { //删除成功为1，否则为0
+int Disk::deleteSwap(int blockindex) { //删除成功为1，否则为0
   if(this->spareswapdisk[blockindex]==1){
     this->swappart[blockindex] = "";
     return 1;
   }
   return 0;
 }
-void disk::showSpareDataDisk() const {
+
+// 打印BitMap
+void Disk::showSpareDataDisk() const {
     for(int i = 0; i < DATA_BLOCK_NUM; i++) {
         if(i % 10 == 0 && i > 0) {
             cout<<"\n";

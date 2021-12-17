@@ -9,7 +9,7 @@
 #include <ctime>
 #include <vector>
 
-#include"diskmanager.h"
+#include"DiskManager.h"
 #include"dirmanager.h"
 #include"memmanager.h"
 /*
@@ -38,7 +38,7 @@ void ThreadMan::Generate(int data_size,string file_name,int Thread_id)  //数据
 {
     string content;
     content=randst(data_size);
-    A_Disk.createFile(file_name, content);
+    ADisk.createFile(file_name, content);
     Dirs.CreatDir("admin",file_name,"");
     cout<<"当前目录内容"<<endl;
     Dirs.ShowDirMan();

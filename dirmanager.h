@@ -4,7 +4,7 @@
 #include<iostream>
 #include<map>
 #include<sstream>
-#include "diskmanager.h"
+#include "DiskManager.h"
 #include "memmanager.h"
 #ifndef OPROJECT1_THREADMANAGER_H
 #define OPROJECT1_THREADMANAGER_H
@@ -125,7 +125,7 @@ void DirMan::DelFile(string x){
     int t= Mems.InMem(x);
     if(!t){
         DirMap.erase(x); //删除目录
-        A_Disk.deleteFile(x); //此处需要删除文件在磁盘中对应的数据；
+        ADisk.deleteFile(x); //此处需要删除文件在磁盘中对应的数据；
     }
     else
     {

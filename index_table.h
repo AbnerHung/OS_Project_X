@@ -9,21 +9,21 @@ using namespace std;
 class IndexTableNode{
   public:
     IndexTableNode(){
-      for (int i = 0; i < INDEX_TABLE_SIZE; ++i) {
-        this->blockindex[i] = -1;
+      for (int & i : this->blockindex) {
+        i = -1;
       }
     }
     vector<int> get_elem(); //返回所有的 block 索引
     bool write(int blocknum);
   private:
     int length=0;
-    int blockindex[INDEX_TABLE_SIZE];
+    int blockindex[INDEX_TABLE_SIZE]{};
 };
 vector<int> IndexTableNode::get_elem(){
   vector<int> tmp;
-  for (int i = 0; i < INDEX_TABLE_SIZE; i++) {
-    if (this->blockindex[i] != -1){
-      tmp.push_back(this->blockindex[i]);
+  for (int & i : this->blockindex) {
+    if (i != -1){
+      tmp.push_back(i);
     }
   }
   return tmp;
@@ -41,15 +41,16 @@ bool IndexTableNode::write(int blocknum){
 // index_table_one 类
 class FirstLevelIndexBlock{
   public:
-    vector<int> get_all_block_index();
+    vector<int> getAllBlockIndex();
     bool write(int blocknum);
   private:
-    IndexTableNode index_table_first[INDEX_TABLE_SIZE];//13
+    IndexTableNode indexTableFirst[INDEX_TABLE_SIZE];//13
 };
-vector<int> FirstLevelIndexBlock::get_all_block_index(){
+
+vector<int> FirstLevelIndexBlock::getAllBlockIndex(){
   vector<int> tmp;
-  for (int i = 0; i < INDEX_TABLE_SIZE; i++) {
-    vector<int> elems = this->index_table_first[i].get_elem();
+  for (auto & i : this->indexTableFirst) {
+    vector<int> elems = i.get_elem();
     int length = elems.size();
     for (int j = 0; j < length; j++) {
       tmp.push_back(elems[j]);
@@ -58,8 +59,8 @@ vector<int> FirstLevelIndexBlock::get_all_block_index(){
   return tmp;
 }
 bool FirstLevelIndexBlock::write(int blocknum){
-  for (int i = 0; i < INDEX_TABLE_SIZE; i++) {
-    if (this->index_table_first[i].write(blocknum)) {
+  for (auto & i : this->indexTableFirst) {
+    if (i.write(blocknum)) {
       return true;
     }
   }
@@ -106,7 +107,7 @@ class index_table_three{
 vector<int> index_table_three::get_all_block_index(){
   vector<int> tmp;
   for (int i = 0; i < INDEX_TABLE_SIZE; i++) {
-    vector<int> elems = this->index_table_third[i].get_all_block_index();
+    vector<int> elems = this->index_table_third[i].getAllBlockIndex();
     int length = elems.size();
     for (int j = 0; j < length; j++) {
       tmp.push_back(elems[j]);

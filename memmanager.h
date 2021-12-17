@@ -45,7 +45,7 @@ class Memory { //内存
 			//Mb_num 申请的内存块数    thread_id  线程id
 			string str;
 			int Mb_num;//申请的内存块数
-			str= A_Disk.readFile(name);
+			str= ADisk.readFile(name);
 			if(str.length()>64) {
 				cout<<"文件过大，内存不足";
 				return 0;
@@ -91,7 +91,7 @@ class Memory { //内存
 					}
 					for(int j=0; j<Mb_num-free; j++) {
 						int z=q.front();//要置换出去的块号
-						Ex_i[u]=A_Disk.swap(Mem[z].message);//换到置换区
+						Ex_i[u]=ADisk.swap(Mem[z].message);//换到置换区
 						Ex_i[u+1]=Mem[z].thread_id;
 						u+=2;
 						q.pop();
@@ -131,7 +131,7 @@ class Memory { //内存
 			}
 			for(int i=1; i<u; i+=2) { //调用磁盘管理的函数删除兑换区对应的文件
 				if(Ex_i[i]==thread_id) {
-                    A_Disk.delSwap(Ex_i[i - 1]);
+                    ADisk.delSwap(Ex_i[i - 1]);
 					Ex_i[i]=0;
 					Ex_i[i-1]=0;
 				}

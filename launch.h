@@ -19,7 +19,7 @@ private:
     DirMan file;
     Folder current_folder;
     Usrs users;
-    diskmanager store_disk;
+    DiskManager store_disk;
 public:
     void welcome();
     void login();
